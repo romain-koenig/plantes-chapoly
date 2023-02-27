@@ -1,0 +1,25 @@
+{
+  "name": "plantes-chapoly",
+  "version": "1.0.0",
+  "description": "Listing des plantes du Chapoly",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx @11ty/eleventy --serve",
+    "build": "npx @11ty/eleventy",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/romain-koenig/plantes-chapoly.git"
+  },
+  "author": "Romain KOENIG",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/romain-koenig/plantes-chapoly/issues"
+  },
+  "homepage": "https://github.com/romain-koenig/plantes-chapoly#readme",
+  "dependencies": {
+    "@11ty/eleventy-fetch": "^3.0.0",
+    "html-minifier": "^4.0.0"
+  }
+}
