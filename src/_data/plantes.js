@@ -54,7 +54,7 @@ module.exports = async function () {
 		}
 	}
 
-	console.log(plantes);
+	console.log(plantes.map((p) => p.type));
 
 	return plantes.sort((a, b) => a.name.localeCompare(b.name));
 }
