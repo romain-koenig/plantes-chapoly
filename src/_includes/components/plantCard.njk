@@ -1,0 +1,81 @@
+{% macro plantCard(name, notes, type, link, image) %}
+
+	<div class="plant col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12
+	p-3
+		" data-type="{{type}}">
+
+		<div class="card 
+		rounded-2
+		text-center
+		 h-100
+		shadow-sm 
+		
+		">
+
+			{% if image %}
+				<img src="{{image}}" class="card-img-top" alt="{{name}}"/>
+			{% else %}
+				<img src="/images/missing_plant.png" class="card-img-top" alt="Missing plant"/>
+
+			{% endif %}
+
+			<div class="card-body px-3 pt-5 pb-3">
+
+				<h4 class="card-title">{{name}}</h4>
+
+				<ul class="list-group list-group-flush">
+					{% if type %}
+						<li class="list-group-item">
+							<span class="badge rounded-pill
+							{% if type == "Plante cultivée"%}
+							text-bg-primary
+							{% else %}
+							text-bg-secondary
+							{% endif %}
+							">{{type}}</span></li>
+					{% endif %}
+					{% if notes %}
+						<li class="list-group-item">{{notes}}</li>
+					{% endif %}
+					{% if link %}
+						<li class="list-group-item">
+							<a href="{{link}}" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
+						Voir fiche
+					</a>
+						</li>
+					{% endif %}
+				</ul>
+
+				<p></p>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	{# <div class="col py-3" data-type={{type}}>
+		<div class="card mb-4 rounded-3 shadow-sm h-100 text-center">
+
+			{% if image %}
+				<img src="{{image}}" class="card-img-top" alt={{name}}/>
+			{% else %}
+				<img src="/images/missing_plant.png" class="card-img-top" alt="Missing plant"/>
+
+			{% endif %}
+
+			<div class="card-body px-3 pt-5 pb-3">
+				<h4 class="card-title">{{name}}</h4>
+				<span class="badge badge-pill badge-primary">{{type}}</span>
+				<p>{{notes}}</p>
+				{% if link %}
+
+					<a href="{{link}}" target="_blank" rel="noopener noreferrer"
+			style="text-decoration: none;">
+			Voir fiche
+		</a>
+				{% endif %}
+			</div>
+		</div>
+	</div> #}
+{% endmacro %}
