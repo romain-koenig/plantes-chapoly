@@ -7,7 +7,7 @@ module.exports = async function () {
 	// PAT = Personal Access Token just for PLANTES CHAPOLY and READONLY	
 	const API_KEY = 'patLHqAiBo8dzIASF.0f45667473de73f3a2b8896844509ab82bc7020b191bddcccf71bf3397f4c4a6';
 	const BASE_ID = 'appzdjdcihp4nnyZA';
-	const TABLE_ID = 'tblVoYkm5qZsZ1iMC';
+	const TABLE_ID = 'tblZQRmVmOb59JyMn';
 
 
 	const fetchUrl = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_ID}?maxRecords=100&view=ALL`;
@@ -25,23 +25,19 @@ module.exports = async function () {
 	});
 
 
-	const plantes = [];
+	const photos = [];
 
 	for (const key in json.records) {
 		if (Object.hasOwnProperty.call(json.records, key)) {
 			const element = json.records[key];
 
-			let image = '';
-			if (element.fields.hasOwnProperty('Pics')) {
-				image = element.fields.Pics[0].thumbnails.large.url;
-			}
-			const plante = {
-				name: element.fields.Name,
-				type: element.fields.Type,
-				link: element.fields["Lien externe"],
+
+			const photo = {
+				id: element.fields.ID,
+				mois: element.fields.Mois,
+				image_url: element.fields.Photo.url,
 				notes: element.fields.Notes,
-				image: image,
-				type: element.fields.Type,
+
 				// image_full: element.fields.Image[0].thumbnails.full.url,
 				// image_large: element.fields.Image[0].thumbnails.large.url,
 				// image_small: element.fields.Image[0].thumbnails.small.url,
@@ -49,10 +45,10 @@ module.exports = async function () {
 				// category: element.fields.Category,
 			};
 
-			plantes.push(plante);
+			photos.push(photo);
 
 		}
 	}
 
-	return plantes.sort((a, b) => a.name.localeCompare(b.name));
+	return photos.sort((a, b) => a.id - b.id);
 }
