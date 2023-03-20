@@ -1,13 +1,12 @@
 const EleventyFetch = require("@11ty/eleventy-fetch");
+const { env } = require('process');
 
 module.exports = async function () {
 
 
-	// This API Key is READONLY, on public data, this is under control
-	// PAT = Personal Access Token just for PLANTES CHAPOLY and READONLY	
-	const API_KEY = 'patLHqAiBo8dzIASF.0f45667473de73f3a2b8896844509ab82bc7020b191bddcccf71bf3397f4c4a6';
-	const BASE_ID = 'appzdjdcihp4nnyZA';
-	const TABLE_ID = 'tblVoYkm5qZsZ1iMC';
+	const API_KEY = process.env.AIRTABLE_API_KEY;
+	const BASE_ID = process.env.AIRTABLE_BASE_ID;
+	const TABLE_ID = process.env.AIRTABLE_PLANTES_TABLE_ID;
 
 
 	const fetchUrl = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_ID}?maxRecords=100&view=ALL`;
