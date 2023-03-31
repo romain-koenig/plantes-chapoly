@@ -1,9 +1,9 @@
-{% macro plantCard(name, notes, type, link, image) %}
+{% macro plantCard(name, notes, type, link, image_id) %}
 
 	<div class="card rounded-2 text-center h-100 shadow-sm">
 
-		{% if image %}
-			<img src="{{image}}" class="card-img-top" alt="{{name}}"/>
+		{% if image_id %}
+			<img src="images/plantes/{{image_id}}" class="card-img-top" alt="{{name}}"/>
 		{% else %}
 			<img src="/images/missing_plant.png" class="card-img-top" alt="Missing plant"/>
 		{% endif %}

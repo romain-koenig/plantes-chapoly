@@ -1,6 +1,8 @@
 const EleventyFetch = require("@11ty/eleventy-fetch");
 const { env } = require('process');
 
+require('dotenv').config();
+
 module.exports = async function () {
 
 
@@ -34,6 +36,7 @@ module.exports = async function () {
 			if (element.fields.hasOwnProperty('Pics')) {
 				image = element.fields.Pics[0].thumbnails.large.url;
 			}
+
 			const plante = {
 				name: element.fields.Name,
 				type: element.fields.Type,
@@ -41,12 +44,11 @@ module.exports = async function () {
 				notes: element.fields.Notes,
 				image: image,
 				type: element.fields.Type,
-				// image_full: element.fields.Image[0].thumbnails.full.url,
-				// image_large: element.fields.Image[0].thumbnails.large.url,
-				// image_small: element.fields.Image[0].thumbnails.small.url,
-				// link: element.fields.URL,
-				// category: element.fields.Category,
+				image_id: element.fields.Pics ? element.fields.Pics[0].url.split("/").pop() + ".jpeg" : '',
+
 			};
+
+			//console.log(`Plante: ${plante.name} - ${plante.image_id ? plante.image_id : 'no image'}`);
 
 			plantes.push(plante);
 
