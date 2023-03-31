@@ -51,6 +51,23 @@
 		crossorigin="anonymous"></script>
 
 		<script>
+			// Sélectionnez votre élément de menu et le bouton du hamburger
+			var menu = document.querySelector('#navbarNav');
+			var hamburger = document.querySelector('.navbar-toggler');
+
+			// Initialisez le plugin Bootstrap pour le menu
+			new bootstrap.Collapse(menu, {toggle: false});
+
+			// Attachez un gestionnaire d'événements au bouton du hamburger
+			hamburger.addEventListener('click', function () {
+				// Basculer l'état du menu
+				menu
+					.classList
+					.toggle('show');
+			});
+		</script>
+
+		<script>
 			// Sélectionnez le menu déroulant et toutes les cartes
 			const filtre = document.getElementById('filtre');
 			const cartes = document.querySelectorAll('.plant');
