@@ -1,16 +1,19 @@
 const EleventyFetch = require("@11ty/eleventy-fetch");
+const { env } = require('process');
+
+require('dotenv').config();
 
 module.exports = async function () {
 
 
-	// This API Key is READONLY, on public data, this is under control
-	// PAT = Personal Access Token just for PLANTES CHAPOLY and READONLY	
-	const API_KEY = 'patLHqAiBo8dzIASF.0f45667473de73f3a2b8896844509ab82bc7020b191bddcccf71bf3397f4c4a6';
-	const BASE_ID = 'appzdjdcihp4nnyZA';
-	const TABLE_ID = 'tblVoYkm5qZsZ1iMC';
+	const API_KEY = process.env.AIRTABLE_API_KEY;
+	const BASE_ID = process.env.AIRTABLE_BASE_ID;
+	const TABLE_ID = process.env.AIRTABLE_PLANTES_TABLE_ID;
 
 
-	let json = await EleventyFetch(`https://api.airtable.com/v0/${BASE_ID}/${TABLE_ID}?maxRecords=100&view=ALL`, {
+	const fetchUrl = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_ID}?maxRecords=100&view=ALL`;
+	console.log(`fetchUrl: ${fetchUrl}`)
+	let json = await EleventyFetch(fetchUrl, {
 		duration: "1m",
 		type: "json",
 		verbose: true,
@@ -29,12 +32,11 @@ module.exports = async function () {
 		if (Object.hasOwnProperty.call(json.records, key)) {
 			const element = json.records[key];
 
-			console.log(element.fields.Name);
-
 			let image = '';
 			if (element.fields.hasOwnProperty('Pics')) {
 				image = element.fields.Pics[0].thumbnails.large.url;
 			}
+
 			const plante = {
 				name: element.fields.Name,
 				type: element.fields.Type,
@@ -42,19 +44,16 @@ module.exports = async function () {
 				notes: element.fields.Notes,
 				image: image,
 				type: element.fields.Type,
-				// image_full: element.fields.Image[0].thumbnails.full.url,
-				// image_large: element.fields.Image[0].thumbnails.large.url,
-				// image_small: element.fields.Image[0].thumbnails.small.url,
-				// link: element.fields.URL,
-				// category: element.fields.Category,
+				image_id: element.fields.Pics ? element.fields.Pics[0].url.split("/").pop() + ".jpeg" : '',
+
 			};
+
+			//console.log(`Plante: ${plante.name} - ${plante.image_id ? plante.image_id : 'no image'}`);
 
 			plantes.push(plante);
 
 		}
 	}
-
-	console.log(plantes.map((p) => p.type));
 
 	return plantes.sort((a, b) => a.name.localeCompare(b.name));
 }

@@ -1,0 +1,23 @@
+/* TEAM */
+                        
+Développement / Gestion de projet: Romain Koenig
+romain@kromatic.fr						
+
+/* THANKS */
+    							
+École du Chapoly
+                             
+/* SITE */
+
+Last update: {DATE}
+
+Standards: HTML5, CSS3
+
+Components: Modernizr, jQuery, etc.
+
+Software: Bootstrap, Eleventy
+       
+                            
+
+
+                    

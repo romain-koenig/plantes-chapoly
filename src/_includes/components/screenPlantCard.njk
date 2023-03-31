@@ -1,0 +1,11 @@
+{% from "./plantCard.njk" import plantCard %}
+
+{% macro screenPlantCard(name, notes, type, link, image_id) %}
+
+	<div class="plant col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12 p-3" data-type="{{type}}">
+
+		{{plantCard(name, notes, type, link, image_id)}}
+
+	</div>
+
+{% endmacro %}
