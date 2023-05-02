@@ -4,9 +4,6 @@
 	<head>
 		{% include "head.njk" %}
 
-		{% from "./_includes/components/screenPlantCard.njk" import screenPlantCard %}
-		{% from "./_includes/components/printPlantCard.njk" import printPlantCard %}
-
 	</head>
 
 	<body>
@@ -15,32 +12,52 @@
 
 		<div class="container">
 
-			<!-- Créez un menu déroulant pour les filtres avec la classe "form-control" -->
-			<select id="filtre" class="form-control mt-3 mb-5">
-				<option value="all">Toutes les plantes</option>
-				<option value="Plante sauvage">Plantes sauvages</option>
-				<option value="Plante cultivée">Plantes cultivées</option>
-			</select>
+			<div class="bg-light p-3 my-3">
+				<p> 
+								Bienvenue sur le site dédié aux plantes du jardin de l'école du Chapoly ! 🌿
+				</p>
+				<p>
+Ce site a été créé pour présenter les différentes plantes qui embellissent et enrichissent notre jardin d'école. Vous y trouverez des informations sur chaque plante, des photos prises par les élèves et les enseignants, ainsi que des conseils pour leur entretien et leur croissance.
+</p>
+				<p>
+En explorant ce site, vous pourrez :
+</p>
+				<ul>
+					<li>
+    Découvrir la variété de plantes présentes dans notre jardin, avec des fiches détaillées pour chaque espèce, incluant leur nom, description, et conseils d'entretien.
+	</li>
+					<li>
+    Parcourir les photos de notre jardin mois par mois, afin d'admirer l'évolution de notre espace vert au fil des saisons.	</li>
+					<li>
+    Apprendre à connaître les plantes qui composent notre jardin et comprendre leur rôle dans l'écosystème local.	</li>
+				</ul>
+				<p>
+Pour commencer votre visite, veuillez consulter les pages suivantes :
 
-			<div class="row d-print-none">
+</p>
+				<ul>
+					<li>
+    Plantes du jardin : Découvrez les différentes espèces de plantes présentes dans notre jardin et apprenez-en davantage sur chacune d'entre elles.
 
-				{% for plante in plantes %}
+	</li>
+					<li>
+    Photos par mois : Parcourez les photos prises dans notre jardin tout au long de l'année et admirez les changements saisonniers. (Développement en cours)
 
-					{{screenPlantCard(plante.name, plante.notes, plante.type, plante.link, plante.image_id)}}
-
-				{% endfor %}
-
+	</li>
+				</ul>
+				<p>
+Nous espérons que vous apprécierez votre visite sur notre site et que vous découvrirez de nouvelles plantes intéressantes. N'hésitez pas à partager ce site avec vos amis et votre famille, afin de les sensibiliser à la beauté et à l'importance de la nature qui nous entoure.
+</p>
+				<p>
+Bonnes découvertes !
+</p>
 			</div>
 
-			<div class="row d-none d-print-grid">
-
-				{% for plante in plantes %}
-
-					{{printPlantCard(plante.name, plante.notes, plante.type, plante.link, plante.image)}}
-
-				{% endfor %}
-
-			</div>
+			<a href="plantes">
+				<button type="button" class="btn btn-primary">Voir la liste des plantes</button>
+			</a>
+			<br><br>
+			<button type="button" class="btn btn-light">Voir les photos par mois (en cours de réalisation)</button>
 
 		</div>
 

@@ -14,7 +14,7 @@ module.exports = async function () {
 	const fetchUrl = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_ID}?maxRecords=100&view=ALL`;
 	console.log(`fetchUrl: ${fetchUrl}`)
 	let json = await EleventyFetch(fetchUrl, {
-		duration: "1m",
+		duration: "5m",
 		type: "json",
 		verbose: true,
 		fetchOptions: {
