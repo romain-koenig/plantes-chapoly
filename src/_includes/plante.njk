@@ -1,0 +1,24 @@
+---
+layout: base.njk
+pagination:
+  data: plantes
+  size: 1
+  alias: plante
+permalink: "plantes/{{ plante.name | slug }}/index.html"
+---
+
+<h1>{{ plante.name }}</h1>
+{% if plante.image %}
+	<img src="/images/plantes/{{plante.image_id}}" alt="{{ plante.name }}" class="plant_photo">
+{% endif %}
+{% if plante.type %}
+	<p>Type : {{ plante.type }}</p>
+{% endif %}
+{% if plante.notes %}
+	<p>Notes : {{ plante.notes }}</p>
+{% endif %}
+{% if plante.link %}
+	<p>
+		<a href="{{ plante.link }}">Lien externe</a>
+	</p>
+{% endif %}
