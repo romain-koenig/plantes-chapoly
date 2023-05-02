@@ -9,8 +9,17 @@ permalink: "plantes/{{ plante.name | slug }}/index.html"
 
 <h1>{{ plante.name }}</h1>
 {% if plante.image %}
+	<h2>Illustration principale</h2>
 	<img src="/images/plantes/{{plante.image_id}}" alt="{{ plante.name }}" class="plant_photo">
 {% endif %}
+
+{% if plante.images %}
+	<h2>Toutes les images</h2>
+	{% for image in plante.images %}
+		<img src="{{ image }}" alt="{{ plante.name }}">
+	{% endfor %}
+{% endif %}
+
 {% if plante.type %}
 	<p>Type : {{ plante.type }}</p>
 {% endif %}

@@ -32,10 +32,16 @@ module.exports = async function () {
 		if (Object.hasOwnProperty.call(json.records, key)) {
 			const element = json.records[key];
 
+			let images = [];
+			if (element.fields.hasOwnProperty('Pics')) {
+				images = element.fields.Pics.map(pic => pic.thumbnails.large.url);
+			}
+
 			let image = '';
 			if (element.fields.hasOwnProperty('Pics')) {
 				image = element.fields.Pics[0].thumbnails.large.url;
 			}
+
 
 			const plante = {
 				name: element.fields.Name,
@@ -45,6 +51,7 @@ module.exports = async function () {
 				image: image,
 				type: element.fields.Type,
 				image_id: element.fields.Pics ? element.fields.Pics[0].url.split("/").pop() + ".jpeg" : '',
+				images: images,
 
 			};
 
