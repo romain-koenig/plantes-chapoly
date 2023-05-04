@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="fr">
+	<head>
+		{% include "./head.njk" %}
+	</head>
+	<body>
+		{% include "./header.njk" %}
+		<main>
+			<div class="container bg-light p-3">
+				{{ content | safe }}
+			</div>
+		</main>
+
+		{% include "./footer.njk" %}
+	</body>
+</html>

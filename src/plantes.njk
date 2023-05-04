@@ -24,10 +24,9 @@
 
 			<div class="row d-print-none">
 
-				{% for photo in photos %}
+				{% for plante in plantes %}
 
-					{{photo.id }}
-					<br>
+					{{screenPlantCard(plante.name, plante.notes, plante.type, plante.link, plante.image_id)}}
 
 				{% endfor %}
 
@@ -50,6 +49,23 @@
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
 		crossorigin="anonymous"></script>
+
+		<script>
+			// Sélectionnez votre élément de menu et le bouton du hamburger
+			var menu = document.querySelector('#navbarNav');
+			var hamburger = document.querySelector('.navbar-toggler');
+
+			// Initialisez le plugin Bootstrap pour le menu
+			new bootstrap.Collapse(menu, {toggle: false});
+
+			// Attachez un gestionnaire d'événements au bouton du hamburger
+			hamburger.addEventListener('click', function () {
+				// Basculer l'état du menu
+				menu
+					.classList
+					.toggle('show');
+			});
+		</script>
 
 		<script>
 			// Sélectionnez le menu déroulant et toutes les cartes

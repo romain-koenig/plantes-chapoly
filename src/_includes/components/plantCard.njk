@@ -2,11 +2,13 @@
 
 	<div class="card rounded-2 text-center h-100 shadow-sm">
 
-		{% if image_id %}
-			<img src="images/plantes/{{image_id}}" class="card-img-top" alt="{{name}}"/>
-		{% else %}
-			<img src="/images/missing_plant.png" class="card-img-top" alt="Missing plant"/>
-		{% endif %}
+		<a href="/plantes/{{ name | slug }}/">
+			{% if image_id %}
+				<img src="/images/plantes/{{image_id}}" class="card-img-top" alt="{{name}}"/>
+			{% else %}
+				<img src="/images/missing_plant.png" class="card-img-top" alt="Missing plant"/>
+			{% endif %}
+		</a>
 
 		<div class="card-body px-3 pt-5 pb-3">
 
@@ -29,10 +31,15 @@
 				{% if link %}
 					<li class="list-group-item">
 						<a href="{{link}}" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
-						Voir fiche
+						Voir fiche externe (Wikipedia, plantenet, ...)
 					</a>
 					</li>
 				{% endif %}
+				<li class="list-group-item">
+					<a href="/plantes/{{ name | slug }}/" style="text-decoration: none;">
+					Voir notre fiche
+				</a>
+				</li>
 			</ul>
 		</div>
 	</div>

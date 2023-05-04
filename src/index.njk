@@ -1,92 +1,84 @@
-<!DOCTYPE html>
-<html lang="fr">
+---
+layout: base.njk
+---
 
-	<head>
-		{% include "head.njk" %}
-
-		{% from "./_includes/components/screenPlantCard.njk" import screenPlantCard %}
-		{% from "./_includes/components/printPlantCard.njk" import printPlantCard %}
-
-	</head>
-
-	<body>
-
-		{% include "header.html" %}
-
-		<div class="container">
-
-			<!-- Créez un menu déroulant pour les filtres avec la classe "form-control" -->
-			<select id="filtre" class="form-control mt-3 mb-5">
-				<option value="all">Toutes les plantes</option>
-				<option value="Plante sauvage">Plantes sauvages</option>
-				<option value="Plante cultivée">Plantes cultivées</option>
-			</select>
-
-			<div class="row d-print-none">
-
-				{% for plante in plantes %}
-
-					{{screenPlantCard(plante.name, plante.notes, plante.type, plante.link, plante.image_id)}}
-
-				{% endfor %}
-
-			</div>
-
-			<div class="row d-none d-print-grid">
-
-				{% for plante in plantes %}
-
-					{{printPlantCard(plante.name, plante.notes, plante.type, plante.link, plante.image)}}
-
-				{% endfor %}
-
-			</div>
-
+<div class="container bg-light">
+	<div class="row">
+		<div class="col-12 text-center my-5">
+			<h1>Bienvenue sur le site dédié aux plantes du jardin de l'école du Chapoly&nbsp;!&nbsp;🌿</h1>
 		</div>
+	</div>
 
-		{% include "footer.html" %}
+	<div class="row">
+		<div class="col-md-6">
 
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-		crossorigin="anonymous"></script>
+			<img src="images/accueil.jpg" alt="Entrée de l'École du Chapoly" class="img-fluid mb-4 rounded"/>
+		</div>
+		<div class="col-md-6">
+			<p>
+        Ce site a été créé pour présenter les différentes plantes qui embellissent et enrichissent notre jardin d'école. Vous y trouverez des informations sur chaque plante, des photos prises par les élèves et les enseignants, ainsi que des conseils pour leur entretien et leur croissance.
+      </p>
+			<p>
+        En explorant ce site, vous pourrez :
+      </p>
+			<ul>
+				<li>
+					<i class="fa-solid fa-leaf" style="color: #26a269;"></i> Découvrir la variété de plantes présentes dans notre jardin, avec des fiches détaillées pour chaque espèce, incluant leur nom, description, et conseils d'entretien.
+        </li>
+				<li>
+					<i class="fa-solid fa-leaf" style="color: #26a269;"></i> Parcourir les photos de notre jardin mois par mois, afin d'admirer l'évolution de notre espace vert au fil des saisons.
+        </li>
+				<li>
+					<i class="fa-solid fa-leaf" style="color: #26a269;"></i> Apprendre à connaître les plantes qui composent notre jardin et comprendre leur rôle dans l'écosystème local.
+        </li>
+			</ul>
+		</div>
+	</div>
 
-		<script>
-			// Sélectionnez votre élément de menu et le bouton du hamburger
-			var menu = document.querySelector('#navbarNav');
-			var hamburger = document.querySelector('.navbar-toggler');
+	<div class="row my-5">
+		<div class="col-12 text-center">
+			<h2>Commencez votre visite</h2>
+		</div>
+		<div class="col-md-6 my-3">
+			<div class="card">
+				<a href="/plantes">
+					<img src="/images/plantes.png" alt="Plantes du jardin" class="card-img-top"/>
+				</a>
+				<div class="card-body">
+					<h5 class="card-title">Plantes du jardin</h5>
+					<p class="card-text">
+            Découvrez les différentes espèces de plantes présentes dans notre jardin et apprenez-en davantage sur chacune d'entre elles.
+          </p>
 
-			// Initialisez le plugin Bootstrap pour le menu
-			new bootstrap.Collapse(menu, {toggle: false});
+					<a href="/plantes" class="btn btn-primary">Découvrir</a>
 
-			// Attachez un gestionnaire d'événements au bouton du hamburger
-			hamburger.addEventListener('click', function () {
-				// Basculer l'état du menu
-				menu
-					.classList
-					.toggle('show');
-			});
-		</script>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 my-3">
+			<div class="card">
+				<a href="#">
+					<img src="/images/calendar.png" alt="Photos par mois" class="card-img-top"/>
+				</a>
+				<div class="card-body">
+					<h5 class="card-title">Photos par mois - COMING SOON</h5>
+					<p class="card-text">
+            Parcourez les photos prises dans notre jardin tout au long de l'année et admirez les changements saisonniers. (réalisation en cours)
+          </p>
+					<a href="#" class="btn btn-secondary">Bientôt&nbsp;!</a>
+				</div>
+			</div>
+		</div>
+	</div>
 
-		<script>
-			// Sélectionnez le menu déroulant et toutes les cartes
-			const filtre = document.getElementById('filtre');
-			const cartes = document.querySelectorAll('.plant');
+	<div class="row">
+		<div class="col-12 text-center my-5">
+			<p>
+        Nous espérons que vous apprécierez votre visite sur notre site et que vous découvrirez de nouvelles plantes intéressantes. N'hésitez pas à partager ce site avec vos amis et votre famille, afin de les sensibiliser à la beauté et à l'importance de la nature qui nous entoure.
+      </p>
+			<p>Bonnes découvertes !</p>
+		</div>
+	</div>
+</div>
 
-			// Ajoutez un événement de changement de valeur au menu déroulant
-			filtre.addEventListener('change', () => {
-				// Récupérez la valeur sélectionnée
-				const valeurFiltre = filtre.value;
-
-				// Parcourez toutes les cartes et affichez/masquez en fonction de la valeur sélectionnée
-				cartes.forEach(carte => {
-					if (valeurFiltre === 'all' || carte.dataset.type === valeurFiltre) {
-						carte.style.display = 'block';
-					} else {
-						carte.style.display = 'none';
-					}
-				});
-			});
-		</script>
-	</body>
-
-</html>
+</div>

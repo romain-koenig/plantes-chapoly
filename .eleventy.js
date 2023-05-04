@@ -48,9 +48,6 @@ module.exports = function (eleventyConfig) {
 	// 	}
 	// });
 
-
-	eleventyConfig.addPassthroughCopy("/src/humans.txt");
-
 	// eleventyConfig.addExtension("txt", {
 	// 	compile: async (inputPath) => {
 	// 		const inputContent = await fs.promises.readFile(inputPath, "utf-8");
