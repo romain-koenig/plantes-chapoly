@@ -1,0 +1,23 @@
+---
+pagination:
+  data: months
+  size: 1
+  alias: month
+permalink: "photos-par-mois/{{ month | slug }}/index.html"
+---
+
+{% extends "src/_includes/base.njk" %}
+
+{% block content %}
+	<h1>{{ month }}</h1>
+
+	<pre>{{ collections.photosByMonth | dump(2) }}</pre>
+
+	{% for photo in collections.photosByMonth[month] %}
+		<div>
+			<h2>{{ photo.data.title }}</h2>
+			<img src="{{ photo.data.image }}" alt="{{ photo.data.title }}">
+			<p>{{ photo.data.description }}</p>
+		</div>
+	{% endfor %}
+{% endblock %}

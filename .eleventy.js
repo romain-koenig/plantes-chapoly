@@ -1,6 +1,4 @@
-const htmlmin = require("html-minifier");
-
-const fs = require("fs");
+const groupBy = require("./src/_filters/group-by");
 
 // Eleventy config file
 
@@ -16,50 +14,37 @@ module.exports = function (eleventyConfig) {
 	eleventyConfig.addPassthroughCopy("src/favicon");
 
 
-	// eleventyConfig.addTransform("htmlmin", function (content, outputPath) {
-	// 	// Eleventy 1.0+: use this.inputPath and this.outputPath instead
-	// 	if (outputPath && outputPath.endsWith(".html")) {
-	// 		let minified = htmlmin.minify(content, {
-	// 			useShortDoctype: true,
-	// 			removeComments: true,
-	// 			collapseWhitespace: true
-	// 		});
-	// 		return minified;
-	// 	}
+	eleventyConfig.addCollection("months", async (collectionApi) => {
+		const allPhotos = await collectionApi.getFilteredByGlob("./src/photos/*.json");
+		const months = [...new Set(allPhotos.map((photo) => photo.data.Mois))];
+		return months;
+	});
 
-	// 	return content;
-	// });
+	function groupByMonth(photos) {
+		return photos.reduce((acc, photo) => {
+			const month = photo.data.Mois;
+			if (!acc[month]) {
+				acc[month] = [];
+			}
+			acc[month].push(photo);
+			return acc;
+		}, {});
+	}
 
 
-	// HUMANS.TXT
+	eleventyConfig.addFilter("groupBy", groupBy);
 
-	// Add as a valid extension to process
-	// Alternatively, add this to the list of formats you pass to the `--formats` CLI argument
-	// eleventyConfig.addTemplateFormats("txt");
+	eleventyConfig.addFilter("get", function (obj, key) {
+		return obj[key];
+	});
 
-	// eleventyConfig.addExtension("txt", {
-	// 	compile: async (inputContent) => {
+	eleventyConfig.addCollection("photosByMonth", (collectionApi) => {
+		const allPhotos = collectionApi.getFilteredByGlob("./src/photos/*.json");
+		console.log(`allPhotos: ${allPhotos}`);
+		return groupByMonth(allPhotos);
+	});
 
-	// 		let output = inputContent.replace(/{DATE}/gi, new Date().toISOString().slice(0, 10));
 
-	// 		return async () => {
-	// 			return output;
-	// 		};
-	// 	}
-	// });
-
-	// eleventyConfig.addExtension("txt", {
-	// 	compile: async (inputPath) => {
-	// 		const inputContent = await fs.promises.readFile(inputPath, "utf-8");
-	// 		const output = inputContent.replace(
-	// 			/{DATE}/gi,
-	// 			new Date().toISOString().slice(0, 10)
-	// 		);
-	// 		return async () => {
-	// 			return output;
-	// 		};
-	// 	},
-	// });
 
 
 	return {

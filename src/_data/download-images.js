@@ -3,16 +3,12 @@ const Airtable = require("airtable");
 const https = require("https");
 const fs = require("fs");
 
-const { env } = require('process');
-
 require('dotenv').config();
 
 // Initialize Airtable with your API key and base ID
 const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
 const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
-const AIRTABLE_TABLE_NAME = process.env.AIRTABLE_PLANTES_TABLE_ID;
-
-console.log(`AIRTABLE_API_KEY: ${AIRTABLE_API_KEY}`);
+const AIRTABLE_TABLE_NAME = process.env.AIRTABLE_TABLE_ID;
 
 const base = new Airtable({ apiKey: AIRTABLE_API_KEY }).base(AIRTABLE_BASE_ID);
 
@@ -25,7 +21,7 @@ function downloadImage(imageUrl) {
 	// Make a request to download the image and pipe it to the file stream
 	https.get(imageUrl, function (response) {
 		response.pipe(file);
-		console.log(`Downloaded ${imageFilename}`);
+		// console.log(`Downloaded ${imageFilename}`);
 	});
 }
 
@@ -46,7 +42,7 @@ base(AIRTABLE_TABLE_NAME).select().eachPage(function page(records, fetchNextPage
 
 		if (!imageUrls.length) return;
 
-		console.log(`Processing ${record.get("Name")}`);
+		// console.log(`Processing ${record.get("Name")}`);
 
 		// Loop through all image URLs and download them
 		imageUrls.forEach(imageUrl => {

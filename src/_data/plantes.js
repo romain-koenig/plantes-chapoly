@@ -8,12 +8,28 @@ module.exports = async function () {
 
 	const API_KEY = process.env.AIRTABLE_API_KEY;
 	const BASE_ID = process.env.AIRTABLE_BASE_ID;
-	const TABLE_ID = process.env.AIRTABLE_PLANTES_TABLE_ID;
+	const PLANTS_TABLE_ID = process.env.AIRTABLE_PLANTES_TABLE_ID;
+	const PHOTOS_TABLE_ID = process.env.AIRTABLE_PHOTOS_TABLE_ID;
 
 
-	const fetchUrl = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_ID}?maxRecords=100&view=ALL`;
-	console.log(`fetchUrl: ${fetchUrl}`)
-	let json = await EleventyFetch(fetchUrl, {
+
+	const fetchPlantsUrl = `https://api.airtable.com/v0/${BASE_ID}/${PLANTS_TABLE_ID}?maxRecords=100&view=ALL`;
+	const fetchPhotosUrl = `https://api.airtable.com/v0/${BASE_ID}/${PHOTOS_TABLE_ID}?maxRecords=100&view=ALL`;
+
+	console.log(`fetchUrl: ${fetchPlantsUrl}`)
+	let plantsJsonData = await EleventyFetch(fetchPlantsUrl, {
+		duration: "5m",
+		type: "json",
+		verbose: true,
+		fetchOptions: {
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': `Bearer ${API_KEY}`
+			}
+		}
+	});
+
+	let photosJsonData = await EleventyFetch(fetchPhotosUrl, {
 		duration: "5m",
 		type: "json",
 		verbose: true,
@@ -28,9 +44,14 @@ module.exports = async function () {
 
 	const plantes = [];
 
-	for (const key in json.records) {
-		if (Object.hasOwnProperty.call(json.records, key)) {
-			const element = json.records[key];
+	for (const key in plantsJsonData.records) {
+		if (Object.hasOwnProperty.call(plantsJsonData.records, key)) {
+
+			const plantElement = plantsJsonData.records[key];
+			const plantPhotos = photosJsonData.records.filter(photo => photo.fields.Plantes[0] === plantElement.id);
+
+			console.log(`plantElement: ${plantElement.fields.Name} - ${plantPhotos.length} photos`);
+
 
 			let images = [];
 			if (element.fields.hasOwnProperty('Pics')) {

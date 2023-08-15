@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="fr">
+	<head>
+		{% include "src/_includes/head.njk" %}
+	</head>
+	<body>
+		{% include "src/_includes/header.njk" %}
+		<main>
+			<div class="container bg-light p-3">
+				<h1>Debugging Months Collection</h1>
+				<p>Number of months: {{ months | length }}</p>
+				<ul>
+					{% for month in months %}
+						<li>{{ month }}</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</main>
+		{% include "src/_includes/footer.njk" %}
+	</body>
+</html>
