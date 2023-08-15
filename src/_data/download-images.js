@@ -17,18 +17,21 @@ console.log(`AIRTABLE_API_KEY: ${AIRTABLE_API_KEY}`);
 const base = new Airtable({ apiKey: AIRTABLE_API_KEY }).base(AIRTABLE_BASE_ID);
 
 
-function downloadImage(imageUrl) {
-	// Get the image filename from the URL
+function downloadImage(imageUrl, details) {
 	const imageFilename = imageUrl.split("/").pop();
-	// Create a write stream to save the image locally
+
+	// Check if file already exists
+	if (fs.existsSync(`${IMAGE_FOLDER}/${imageFilename}.jpeg`)) {
+		console.log(`File ${imageFilename} for ${details} already exists. Skipping download.`);
+		return;
+	}
+
 	const file = fs.createWriteStream(`${IMAGE_FOLDER}/${imageFilename}.jpeg`);
-	// Make a request to download the image and pipe it to the file stream
 	https.get(imageUrl, function (response) {
 		response.pipe(file);
-		console.log(`Downloaded ${imageFilename}`);
+		console.log(`Downloaded ${imageFilename} for ${details}`);
 	});
 }
-
 
 
 // Create a folder to store the images
@@ -41,18 +44,27 @@ if (!fs.existsSync(IMAGE_FOLDER)) {
 base(AIRTABLE_TABLE_NAME).select().eachPage(function page(records, fetchNextPage) {
 
 	records.forEach(function (record) {
-		// Get the image URLs from the Photo field
-		const imageUrls = record.get("Pics") ? record.get("Pics").map(pic => pic.url) : [];
+		const pics = record.get("Pics") || [];
 
-		if (!imageUrls.length) return;
+		const plantName = record.get("Name");
+		console.log(`Processing ${plantName}`);
 
-		console.log(`Processing ${record.get("Name")}`);
+		pics.forEach(pic => {
+			// Download original size
+			downloadImage(pic.url, `${plantName} (full)`);
 
-		// Loop through all image URLs and download them
-		imageUrls.forEach(imageUrl => {
-			downloadImage(imageUrl);
+			// Download small size
+			if (pic.thumbnails && pic.thumbnails.small) {
+				downloadImage(pic.thumbnails.small.url, `${plantName} (small)`);
+			}
+
+			// Download large size
+			if (pic.thumbnails && pic.thumbnails.large) {
+				downloadImage(pic.thumbnails.large.url, `${plantName} (large)`);
+			}
 		});
 	});
+
 
 
 	// Fetch next page of records if there are more pages
