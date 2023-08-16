@@ -29,13 +29,13 @@
 					<li class="list-group-item">{{notes}}</li>
 				{% endif %}
 				{% if link %}
-					<li class="list-group-item">
+					<li class="list-group-item d-print-none">
 						<a href="{{link}}" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
 						Voir fiche externe (Wikipedia, plantenet, ...)
 					</a>
 					</li>
 				{% endif %}
-				<li class="list-group-item">
+				<li class="list-group-item d-print-none">
 					<a href="/plantes/{{ name | slug }}/" style="text-decoration: none;">
 					Voir notre fiche
 				</a>

@@ -23,3 +23,12 @@ body {
 
 
 }
+
+/* Make sure that we don't print the background image */
+@media print {
+    body {
+        background-color: white;
+        /* Reset to white for printing */
+        background-image: none;
+    }
+}
