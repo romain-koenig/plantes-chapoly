@@ -3,8 +3,7 @@ body {
     background-color: #E9F7E9;
     color: #204D2B;
 
-    background: url('/images/geometric-leaves.webp');
-
+    background: linear-gradient(to bottom, #eff9ea, #9ed3bc);
 
 }
 
@@ -47,11 +46,11 @@ h3 {
 }
 
 a {
-    color: #00B140;
+    color: #00521E;
     text-decoration: none;
     transition: color 0.3s;
 }
 
 a:hover {
-    color: #204D2B;
+    color: #16361e;
 }
