@@ -3,8 +3,7 @@ body {
     background-color: #E9F7E9;
     color: #204D2B;
 
-    background: url('/images/geometric-leaves.webp');
-
+    background: linear-gradient(to bottom, #eff9ea, #9ed3bc);
 
 }
 
