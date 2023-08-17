@@ -47,11 +47,11 @@ h3 {
 }
 
 a {
-    color: #00B140;
+    color: #00521E;
     text-decoration: none;
     transition: color 0.3s;
 }
 
 a:hover {
-    color: #204D2B;
+    color: #16361e;
 }
