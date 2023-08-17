@@ -2,6 +2,11 @@ require('dotenv').config();
 const fetchAllRecords = require('./helpers').fetchAllRecords;
 
 
+function getIdFromUrl(url) {
+	return url.split("/").pop();
+}
+
+
 module.exports = async function () {
 	const API_KEY = process.env.AIRTABLE_API_KEY;
 	const BASE_ID = process.env.AIRTABLE_BASE_ID;
@@ -35,10 +40,10 @@ module.exports = async function () {
 						"small_photo_url": pic.thumbnails.small.url,
 						"large_photo_url": pic.thumbnails.large.url,
 						"full_photo_url": pic.url,
-						"thumbnail_id": pic.thumbnails.large.url.split("/").pop(),
-						"large_photo_id": pic.thumbnails.large.url.split("/").pop(),
-						"small_photo_id": pic.thumbnails.small.url.split("/").pop(),
-						"full_photo_id": pic.url.split("/").pop()
+						"thumbnail_id": getIdFromUrl(pic.thumbnails.large.url),
+						"large_photo_id": getIdFromUrl(pic.thumbnails.large.url),
+						"small_photo_id": getIdFromUrl(pic.thumbnails.small.url),
+						"full_photo_id": getIdFromUrl(pic.url),
 					};
 					console.log(picinfos);
 					return picinfos;
@@ -55,7 +60,7 @@ module.exports = async function () {
 				notes: fields.Notes || '',
 				main_image_id: fields.Pics && fields.Pics[0].id ? fields.Pics[0].id : '',
 				thumbnail_id: fields.Pics && fields.Pics[0].thumbnails && fields.Pics[0].thumbnails.large ? fields.Pics[0].thumbnails.large.url.split("/").pop() : '',
-				photo_ids: fields.Photos ? fields.Photos : []
+				photo_infos: pics
 
 			};
 
