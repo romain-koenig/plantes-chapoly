@@ -48,18 +48,6 @@ module.exports = async function () {
 			// s'il y aune plante, il ne devrait y en avoirt qu'une seule (bloqué dans la saisie Airtable)
 			record.fields.Plantes.forEach(plantId => {
 
-				console.log(plantId);
-				if (plantId == 'recxQJDMTdTUR3nW5') {
-					console.log("VOILA LA BOURRACHE");
-				}
-
-				if (!plantes[plantId]) {
-					console.log("Plant ID not found: ", plantId);
-				} else {
-					console.log("Plant ID found: ", plantId);
-				}
-
-
 				if (!organizedData[month][plantId]) {
 					organizedData[month][plantId] = [];
 				}

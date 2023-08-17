@@ -12,7 +12,7 @@ async function fetchAllRecords(url, apiKey) {
 
 	do {
 		const response = await EleventyFetch(`${url}${offset ? `&offset=${offset}` : ''}`, {
-			duration: "5m",
+			duration: "120m",
 			type: "json",
 			verbose: true,
 			fetchOptions: {

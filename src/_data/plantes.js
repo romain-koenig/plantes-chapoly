@@ -49,11 +49,6 @@ module.exports = async function () {
 			}
 			//console.log(fields);
 
-			console.log(plantElement.id);
-			if (plantElement.id == 'recxQJDMTdTUR3nW5') {
-				console.log("VOILA LA BOURRACHE *******************************************************************");
-			}
-
 			const plante = {
 				id: plantElement.id,
 				name: fields.Name || '',
