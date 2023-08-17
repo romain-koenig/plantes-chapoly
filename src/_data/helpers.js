@@ -32,7 +32,12 @@ async function fetchAllRecords(url, apiKey) {
 }
 
 
+function getIdFromUrl(url) {
+	return url.split("/").pop();
+}
+
 module.exports = {
 	currentYear,
-	fetchAllRecords
+	fetchAllRecords,
+	getIdFromUrl
 };

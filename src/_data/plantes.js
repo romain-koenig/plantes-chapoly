@@ -1,10 +1,6 @@
 require('dotenv').config();
 const fetchAllRecords = require('./helpers').fetchAllRecords;
-
-
-function getIdFromUrl(url) {
-	return url.split("/").pop();
-}
+const getIdFromUrl = require('./helpers').getIdFromUrl;
 
 
 module.exports = async function () {
@@ -12,7 +8,7 @@ module.exports = async function () {
 	const BASE_ID = process.env.AIRTABLE_BASE_ID;
 	const PLANTS_TABLE_ID = process.env.AIRTABLE_PLANTES_TABLE_ID;
 
-	const fetchPlantsUrl = `https://api.airtable.com/v0/${BASE_ID}/${PLANTS_TABLE_ID}?maxRecords=100&view=ALL`;
+	const fetchPlantsUrl = `https://api.airtable.com/v0/${BASE_ID}/${PLANTS_TABLE_ID}?view=ALL`;
 
 
 	const plantsJsonData = await fetchAllRecords(fetchPlantsUrl, API_KEY);
@@ -53,7 +49,13 @@ module.exports = async function () {
 			}
 			//console.log(fields);
 
+			console.log(plantElement.id);
+			if (plantElement.id == 'recxQJDMTdTUR3nW5') {
+				console.log("VOILA LA BOURRACHE *******************************************************************");
+			}
+
 			const plante = {
+				id: plantElement.id,
 				name: fields.Name || '',
 				type: fields.Type || '',
 				link: fields["Lien externe"] || '',
