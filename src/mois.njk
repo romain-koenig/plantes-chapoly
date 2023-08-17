@@ -19,24 +19,17 @@
 
                 {% set monthsList = ["01 - Janvier", "02 - Février", "03 - Mars", "04 - Avril", "05 - Mai", "06 - Juin", "07 - Juillet", "08 - Août", "09 - Septembre", "10 - Octobre", "11 - Novembre", "12 - Décembre"] %}
 
-                {% for month in monthsList %}
-                    <div class="col-12">
-						
-                        <h2 class="bg-light p-2">{{ month.split(" - ")[1] }}</h2>
-						
+				{% for month in monthsList %}
+					<h2 class="bg-light p-2">{{ month.split(" - ")[1] }}</h2>
+					
+					{% set currentMonthPhotos = mois | getMonthPhotos(month) %}
+					
+					{% for photo in currentMonthPhotos.photos %}
+						<p>Plant: {{ photo.plantName }}</p>
+						<img src="{{ photo.photoUrl }}" alt="{{ photo.plantName }}">
+					{% endfor %}
 
-                        <div class="row">
-                            {% for plante in plantes %}
-                                {% if plante.months.includes(month) %}
-                                    
-                                    {{screenPlantCard(plante.name, plante.notes, plante.type, plante.link, plante.thumnail_id)}}
-
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-
-                    </div>
-                {% endfor %}
+				{% endfor %}
 
             </div>
 

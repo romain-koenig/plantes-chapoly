@@ -22,14 +22,14 @@ function downloadImage(imageUrl, details) {
 
 	// Check if file already exists
 	if (fs.existsSync(`${IMAGE_FOLDER}/${imageFilename}.jpeg`)) {
-		console.log(`File ${imageFilename} for ${details} already exists. Skipping download.`);
+		//console.log(`File ${imageFilename} for ${details} already exists. Skipping download.`);
 		return;
 	}
 
 	const file = fs.createWriteStream(`${IMAGE_FOLDER}/${imageFilename}.jpeg`);
 	https.get(imageUrl, function (response) {
 		response.pipe(file);
-		console.log(`Downloaded ${imageFilename} for ${details}`);
+		//console.log(`Downloaded ${imageFilename} for ${details}`);
 	});
 }
 
@@ -47,7 +47,7 @@ base(AIRTABLE_TABLE_NAME).select().eachPage(function page(records, fetchNextPage
 		const pics = record.get("Pics") || [];
 
 		const plantName = record.get("Name");
-		console.log(`Processing ${plantName}`);
+		// console.log(`Processing ${plantName}`);
 
 		pics.forEach(pic => {
 			// Download original size
