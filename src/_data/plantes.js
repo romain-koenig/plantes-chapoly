@@ -45,7 +45,7 @@ module.exports = async function () {
 						"small_photo_id": getIdFromUrl(pic.thumbnails.small.url),
 						"full_photo_id": getIdFromUrl(pic.url),
 					};
-					console.log(picinfos);
+					// console.log(picinfos);
 					return picinfos;
 
 				});
