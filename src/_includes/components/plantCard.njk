@@ -4,7 +4,7 @@
 
 		<a href="/plantes/{{ name | slug }}/">
 			{% if image_id %}
-				<img src="/images/plantes/{{image_id}}" class="card-img-top" alt="{{name}}"/>
+				<img src="/images/plantes/{{image_id}}.jpeg" class="card-img-top" alt="{{name}}"/>
 			{% else %}
 				<img src="/images/missing_plant.png" class="card-img-top" alt="Missing plant"/>
 			{% endif %}
@@ -29,13 +29,13 @@
 					<li class="list-group-item">{{notes}}</li>
 				{% endif %}
 				{% if link %}
-					<li class="list-group-item">
+					<li class="list-group-item d-print-none">
 						<a href="{{link}}" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
-						Voir fiche externe (Wikipedia, plantenet, ...)
+						Voir fiche externe 🔗
 					</a>
 					</li>
 				{% endif %}
-				<li class="list-group-item">
+				<li class="list-group-item d-print-none">
 					<a href="/plantes/{{ name | slug }}/" style="text-decoration: none;">
 					Voir notre fiche
 				</a>

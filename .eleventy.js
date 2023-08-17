@@ -61,6 +61,21 @@ module.exports = function (eleventyConfig) {
 	// 	},
 	// });
 
+	eleventyConfig.addFilter("getMonthPhotos", function (monthsData, month) {
+		// console.log("Filter invoked");
+		// console.log("monthsData inside filter", monthsData);
+		// console.log("month inside filter", month);
+
+		if (!monthsData || !Array.isArray(monthsData)) {
+			console.warn("getMonthPhotos filter: monthsData is not a valid array");
+			return [];
+		}
+
+		return monthsData.find(entry => entry.month === month);
+	});
+
+
+
 
 	return {
 		dir: {

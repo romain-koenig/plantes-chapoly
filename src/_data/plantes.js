@@ -1,94 +1,78 @@
-const EleventyFetch = require("@11ty/eleventy-fetch");
-const { env } = require('process');
-
 require('dotenv').config();
+const fetchAllRecords = require('./helpers').fetchAllRecords;
+const getIdFromUrl = require('./helpers').getIdFromUrl;
+
 
 module.exports = async function () {
-
-
 	const API_KEY = process.env.AIRTABLE_API_KEY;
 	const BASE_ID = process.env.AIRTABLE_BASE_ID;
 	const PLANTS_TABLE_ID = process.env.AIRTABLE_PLANTES_TABLE_ID;
-	const PHOTOS_TABLE_ID = process.env.AIRTABLE_PHOTOS_TABLE_ID;
+
+	const fetchPlantsUrl = `https://api.airtable.com/v0/${BASE_ID}/${PLANTS_TABLE_ID}?view=ALL`;
 
 
+	const plantsJsonData = await fetchAllRecords(fetchPlantsUrl, API_KEY);
 
-	const fetchPlantsUrl = `https://api.airtable.com/v0/${BASE_ID}/${PLANTS_TABLE_ID}?maxRecords=100&view=ALL`;
-	const fetchPhotosUrl = `https://api.airtable.com/v0/${BASE_ID}/${PHOTOS_TABLE_ID}?maxRecords=100&view=ALL`;
 
-	console.log(`fetchUrl: ${fetchPlantsUrl}`)
-	let plantsJsonData = await EleventyFetch(fetchPlantsUrl, {
-		duration: "5m",
-		type: "json",
-		verbose: true,
-		fetchOptions: {
-			headers: {
-				'Content-Type': 'application/json',
-				'Authorization': `Bearer ${API_KEY}`
-			}
-		}
-	});
-
-	let photosJsonData = await EleventyFetch(fetchPhotosUrl, {
-		duration: "5m",
-		type: "json",
-		verbose: true,
-		fetchOptions: {
-			headers: {
-				'Content-Type': 'application/json',
-				'Authorization': `Bearer ${API_KEY}`
-			}
-		}
-	});
+	console.log(`Plants: ${plantsJsonData.length}`);
 
 
 	const plantes = [];
 
-	for (const key in plantsJsonData.records) {
-		if (Object.hasOwnProperty.call(plantsJsonData.records, key)) {
+	for (const key in plantsJsonData) {
 
-			const plantElement = plantsJsonData.records[key];
-
-			const plantPhotos = photosJsonData.records.filter(photo =>
-				photo.fields.Plantes && photo.fields.Plantes[0] === plantElement.id);
-
-			console.log(`plantElement: ${plantElement.fields.Name} - ${plantPhotos.length} photos`);
+		if (Object.hasOwnProperty.call(plantsJsonData, key)) {
+			const plantElement = plantsJsonData[key];
 
 
-			let images = [];
-			let months = [];
-			let image = '';
-			let thumbnail = '';
+			const fields = plantElement.fields;
 
-			if (plantElement.fields.hasOwnProperty('Pics')) {
-				image = plantElement.fields.Pics[0].thumbnails.large.url;
-				months = plantPhotos.map(photo => photo.fields.Mois);
-				images = plantElement.fields.Pics.map(pic => pic.thumbnails.large.url);
-				thumbnail = plantElement.fields.Pics[0].thumbnails.small.url;
+			let pics = [];
+			if (fields.Pics) {
+				pics = fields.Pics.map(pic => {
+
+					const picinfos = {
+						"photo_id": pic.id,
+						"small_photo_url": pic.thumbnails.small.url,
+						"large_photo_url": pic.thumbnails.large.url,
+						"full_photo_url": pic.url,
+						"thumbnail_id": getIdFromUrl(pic.thumbnails.large.url),
+						"large_photo_id": getIdFromUrl(pic.thumbnails.large.url),
+						"small_photo_id": getIdFromUrl(pic.thumbnails.small.url),
+						"full_photo_id": getIdFromUrl(pic.url),
+					};
+					// console.log(picinfos);
+					return picinfos;
+
+				});
+
+			}
+			//console.log(fields);
+
+			console.log(plantElement.id);
+			if (plantElement.id == 'recxQJDMTdTUR3nW5') {
+				console.log("VOILA LA BOURRACHE *******************************************************************");
 			}
 
-
 			const plante = {
-				name: plantElement.fields.Name,
-				type: plantElement.fields.Type,
-				link: plantElement.fields["Lien externe"],
-				notes: plantElement.fields.Notes,
-				image: image,
-				thumbnail: thumbnail,
-				type: plantElement.fields.Type,
-				image_id: plantElement.fields.Pics ? plantElement.fields.Pics[0].url.split("/").pop() + ".jpeg" : '',
-				thumnail_id: plantElement.fields.Pics ? plantElement.fields.Pics[0].thumbnails.large.url.split("/").pop() + ".jpeg" : '',
-				images: images,
-				months: months
+				id: plantElement.id,
+				name: fields.Name || '',
+				type: fields.Type || '',
+				link: fields["Lien externe"] || '',
+				notes: fields.Notes || '',
+				main_image_id: fields.Pics && fields.Pics[0].id ? fields.Pics[0].id : '',
+				thumbnail_id: fields.Pics && fields.Pics[0].thumbnails && fields.Pics[0].thumbnails.large ? fields.Pics[0].thumbnails.large.url.split("/").pop() : '',
+				photo_infos: pics
 
 			};
 
-			console.log(`Plante: ${plante.name} - ${plante.image_id ? plante.image_id : 'no image'}`);
+			//console.log(plante);
 
 			plantes.push(plante);
-
 		}
 	}
 
-	return plantes.sort((a, b) => a.name.localeCompare(b.name));
-} 	
+	const sortedPlantes = plantes.sort((a, b) => a.name.localeCompare(b.name));
+	//console.log(sortedPlantes);
+	return sortedPlantes;
+}

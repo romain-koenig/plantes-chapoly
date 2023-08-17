@@ -15,19 +15,19 @@ permalink: "plantes/{{ plante.name | slug }}/index.html"
 
 <h1>{{ plante.name }}</h1>
 
-{% if plante.images %}
-	{% if plante.images.length == 0 %}
+{% if plante.photo_infos %}
+	{% if plante.photo_infos.length == 0 %}
 		<h2>
-			<del>Photos</del>
+			Photos
 		</h2>
-		<p>Aucune photo disponible pour cette plante. Aidez-nous, faites une photo et rajoutez-là&nbsp;!</p>
-	{% elif plante.images.length == 1 %}
+		<p>Aucune photo n'est disponible pour cette plante. Aidez-nous, faites une photo et rajoutez-là&nbsp;!</p>
+	{% elif plante.photo_infos.length == 1 %}
 		<h2>Photo</h2>
-		<img src="{{ plante.images[0] }}" alt="{{ plante.name }}" class="img-thumbnail">
+		<img src="/images/plantes/{{ plante.photo_infos[0].large_photo_id }}.jpeg" alt="{{ plante.name }}" class="img-thumbnail">
 	{% else %}
 		<h2>Photos</h2>
-		{% for image in plante.images %}
-			<img src="{{ image }}" alt="{{ plante.name }}" class="img-thumbnail">
+		{% for image in plante.photo_infos %}
+			<img src="/images/plantes/{{ image.large_photo_id }}.jpeg" alt="{{ plante.name }}" class="img-thumbnail">
 		{% endfor %}
 	{% endif %}
 {% endif %}

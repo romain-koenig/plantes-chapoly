@@ -15,30 +15,54 @@
 
 
         <div class="container">
-            <div class="row">
 
-                {% set monthsList = ["01 - Janvier", "02 - Février", "03 - Mars", "04 - Avril", "05 - Mai", "06 - Juin", "07 - Juillet", "08 - Août", "09 - Septembre", "10 - Octobre", "11 - Novembre", "12 - Décembre"] %}
+			<div class="row">
 
-                {% for month in monthsList %}
-                    <div class="col-12">
-                        <h2>{{ month.split(" - ")[1] }}</h2>
+				{% set monthsList = ["01 - Janvier", "02 - Février", "03 - Mars", "04 - Avril", "05 - Mai", "06 - Juin", "07 - Juillet", "08 - Août", "09 - Septembre", "10 - Octobre", "11 - Novembre", "12 - Décembre"] %}
 
-                        <div class="row">
-                            {% for plante in plantes %}
-                                {% if plante.months.includes(month) %}
-                                    
-                                    {{screenPlantCard(plante.name, plante.notes, plante.type, plante.link, plante.thumnail_id)}}
+				{% for month in monthsList %}
 
-                                {% endif %}
-                            {% endfor %}
-                        </div>
+					<h2 class="bg-light p-2">{{ month.split(" - ")[1] }}</h2>
 
-                    </div>
-                {% endfor %}
+					{# RÉCUPÉRER LES PHOTOS DU MOIS #}
+					{% set monthData = mois[month] %}
+					
+					{# Vérifier si nous avons des données pour ce mois #}
+					{% if monthData %}
 
-            </div>
+						{# Affichage de débogage pour vérifier les données #}
+						{# {{ mois[month] | dump }} #}
 
-        </div>
+						{# Parcourir chaque plante pour le mois donné #}
+						{% for plantId, photos in monthData %}
+
+														{# Afficher les photos de la plante #}
+						
+							{% for photo in photos %}
+
+													
+								{# Afficher la photo #}
+
+									{# {{photo.large_photo_id | dump}} #}
+									{{screenPlantCard(photo.plant_name, "", "", "", photo.large_photo_id)}}
+									
+								
+
+							{% endfor %}
+
+						{% endfor %}
+
+					{% else %}
+						<p>Aucune photo pour ce mois.</p>
+					{% endif %}
+
+				{% endfor %}
+
+			</div>
+
+		</div>
+
+
 
         {% include "footer.njk" %}
 
