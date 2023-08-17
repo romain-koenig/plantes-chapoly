@@ -11,7 +11,7 @@ layout: base.njk
 
 				{% for month in monthsList %}
 
-					<h2 class="bg-light p-2">{{ month.split(" - ")[1] }}</h2>
+					<h2>{{ month.split(" - ")[1] }}</h2>
 
 					{# RÉCUPÉRER LES PHOTOS DU MOIS #}
 					{% set monthData = mois[month] %}
